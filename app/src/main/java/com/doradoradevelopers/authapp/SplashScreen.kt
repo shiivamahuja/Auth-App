@@ -15,6 +15,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import kotlinx.coroutines.delay
 
+
 @Composable
 fun SplashScreen(navController: NavController) {
 

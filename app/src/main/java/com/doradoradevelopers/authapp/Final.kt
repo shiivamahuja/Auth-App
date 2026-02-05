@@ -22,31 +22,34 @@ import com.google.firebase.firestore.firestore
 fun Greet(user: String, modifier: Modifier = Modifier) {
 
     val context = LocalContext.current
-    val name = remember { mutableStateOf("") }
     val db = Firebase.firestore
 
-    // ✅ Firestore call goes inside LaunchedEffect
+    val firstName = remember { mutableStateOf("") }
+    val isLoading = remember { mutableStateOf(true) }
+
     androidx.compose.runtime.LaunchedEffect(user) {
         db.collection("Users")
-            .document(user)
+            .document(user) // user = UID ✅
             .get()
             .addOnSuccessListener { document ->
                 if (document.exists()) {
-                    name.value = document.getString("firstName") ?: ""
+                    firstName.value = document.getString("firstName") ?: ""
                 } else {
                     Toast.makeText(context, "User data not found", Toast.LENGTH_SHORT).show()
                 }
+                isLoading.value = false
             }
             .addOnFailureListener { e ->
                 Log.e(TAG, "Failed to fetch user", e)
                 Toast.makeText(context, "Failed to load user data", Toast.LENGTH_SHORT).show()
+                isLoading.value = false
             }
     }
 
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(top = 50.dp, start = 20.dp),
+            .padding(top = 50.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
@@ -54,6 +57,10 @@ fun Greet(user: String, modifier: Modifier = Modifier) {
 
         Spacer(modifier = Modifier.padding(20.dp))
 
-        Text(text = "Hello ${name.value}")
+        if (isLoading.value) {
+            Text(text = "Loading...")
+        } else {
+            Text(text = "Hello ${firstName.value}")
+        }
     }
 }
