@@ -34,9 +34,6 @@ fun Navigation() {
         composable("loginScreen") {
             LoginScreen(navController)
         }
-        composable("registerScreen") {
-            RegisterScreen(navController)
-        }
         composable(
             route = "homeScreen/{user}",
             arguments = listOf(
