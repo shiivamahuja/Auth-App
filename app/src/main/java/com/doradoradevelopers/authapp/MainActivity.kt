@@ -41,7 +41,7 @@ fun Navigation() {
             )
         ) { backStackEntry ->
             val user = backStackEntry.arguments?.getString("user") ?: ""
-            Greet(user)
+            Greet()
         }
     }
 }
