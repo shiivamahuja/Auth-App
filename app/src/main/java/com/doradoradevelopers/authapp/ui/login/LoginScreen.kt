@@ -11,6 +11,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -66,13 +67,17 @@ fun LoginScreen(
     Box(modifier = Modifier.fillMaxSize()) {
 
         Column(
-            modifier = Modifier.background(Color.Blue).fillMaxSize(),
+            modifier = Modifier
+                .background(Color.Blue)
+                .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
                 painter = painterResource(R.mipmap.ic_launcher_foreground),
                 contentDescription = null,
-                modifier = Modifier.padding(top = 100.dp).size(300.dp)
+                modifier = Modifier
+                    .padding(top = 100.dp)
+                    .size(300.dp)
             )
 
             Box(
@@ -93,11 +98,31 @@ fun LoginScreen(
                     Text("Login")
                 }
 
+                TermsAndPrivacyRow(
+                    onTermsClick = { },
+                    onPrivacyClick = { },
+                    containerModifier = Modifier
+                        .align(Alignment.TopCenter)
+                        .padding(top = 115.dp),
+                    textModifier = Modifier.align(Alignment.Center),
+                    Popupui = false
+                )
+
+
+
+                BottomOptionsCard(
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(bottom = 90.dp)
+                )
+
                 Text(
                     text = "App Version 1.0.1",
                     fontSize = 14.sp,
                     color = Color.Gray,
-                    modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 20.dp)
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(bottom = 40.dp)
                 )
             }
         }
@@ -113,7 +138,9 @@ fun LoginScreen(
             )
 
             Box(
-                modifier = Modifier.fillMaxWidth().align(Alignment.BottomCenter)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
             ) {
                 PhonePopupUI(viewModel)
             }
@@ -134,9 +161,10 @@ fun PhonePopupUI(viewModel: LoginViewModel) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
+            .fillMaxHeight(0.65f)
             .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
             .background(Color.White)
-            .padding(16.dp)
+            .padding(horizontal = 16.dp, vertical = 24.dp)
             .clickable(enabled = false) {}
     ) {
         Text("Login", fontSize = 24.sp, fontWeight = FontWeight.Bold)
@@ -233,6 +261,16 @@ fun PhonePopupUI(viewModel: LoginViewModel) {
                 }
             )
         }
+
+        TermsAndPrivacyRow(
+            onTermsClick = { },
+            onPrivacyClick = { },
+            containerModifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(top = 16.dp),
+            textModifier = Modifier.align(Alignment.CenterHorizontally),
+            Popupui = true
+        )
     }
 }
 
